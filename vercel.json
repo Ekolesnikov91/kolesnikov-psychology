@@ -2,8 +2,8 @@
   "redirects": [
     {
       "source": "/",
-      "destination": "https://kolesnikovpsy.ru/tg-channel",
-      "permanent": true
+      "destination": "/tg-channel",
+      "permanent": false
     }
   ]
 }
