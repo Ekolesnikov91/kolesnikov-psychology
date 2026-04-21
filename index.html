@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<title>Евгений Колесников — подростковый психолог</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:        #F4EFE6;
+    --bg-2:      #EBE4D6;
+    --ink:       #1C1B18;
+    --ink-soft:  #2E2C27;
+    --muted:     #6B6459;
+    --line:      #CFC6B4;
+    --paper:     #FBF7EE;
+    --accent:    oklch(0.62 0.13 58);     /* охра */
+    --accent-2:  oklch(0.45 0.09 25);     /* приглушённая терракота */
+    --serif: "Instrument Serif", "Times New Roman", serif;
+    --sans:  "Geist", system-ui, sans-serif;
+    --mono:  "Geist Mono", ui-monospace, monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  a{color:inherit}
+  ::selection{background:var(--ink);color:var(--bg)}
+
+  /* ---------- Grain / paper texture ---------- */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;
+    background-image:
+      radial-gradient(1200px 600px at 15% -10%, rgba(180,140,80,.10), transparent 60%),
+      radial-gradient(900px 500px at 110% 110%, rgba(120,80,40,.08), transparent 55%);
+    mix-blend-mode:multiply;
+    z-index:0;
+  }
+  main, header, nav{position:relative;z-index:1}
+
+  /* ---------- Top bar ---------- */
+  .top{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:22px 40px;
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .top .brand{display:flex;align-items:center;gap:10px}
+  .top .brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent)}
+  .top nav{display:flex;gap:26px}
+  .top nav a{text-decoration:none;opacity:.75;transition:opacity .15s}
+  .top nav a:hover{opacity:1}
+  .top .cta{
+    text-decoration:none;
+    padding:8px 14px;
+    border:1px solid var(--ink);
+    border-radius:999px;
+    background:var(--ink);color:var(--bg);
+    transition:background .15s,color .15s;
+  }
+  .top .cta:hover{background:transparent;color:var(--ink)}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:80px 40px 60px;
+    display:grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap:56px;
+    border-bottom:1px solid var(--line);
+  }
+  .hero .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:28px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .hero .eyebrow span.sep{width:36px;height:1px;background:var(--line)}
+  .hero h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size: clamp(52px, 7.2vw, 112px);
+    line-height:.98;
+    letter-spacing:-0.02em;
+    margin:0 0 28px;
+    color:var(--ink);
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--accent-2);
+  }
+  .hero .lede{
+    font-size:20px;
+    line-height:1.45;
+    max-width:520px;
+    color:var(--ink-soft);
+    margin:0 0 40px;
+    text-wrap:pretty;
+  }
+  .hero .actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:48px}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:14px 22px;
+    border-radius:999px;
+    font-family:var(--sans);
+    font-size:15px;font-weight:500;
+    text-decoration:none;
+    border:1px solid var(--ink);
+    transition:transform .15s, background .15s, color .15s;
+  }
+  .btn.primary{background:var(--ink);color:var(--bg)}
+  .btn.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
+  .btn.ghost{background:transparent;color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--bg)}
+  .btn .arrow{transition:transform .2s}
+  .btn:hover .arrow{transform:translateX(3px)}
+
+  .hero-meta{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    max-width:560px;
+  }
+  .hero-meta div{padding-right:24px}
+  .hero-meta div+div{border-left:1px solid var(--line);padding-left:24px}
+  .hero-meta .k{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+  .hero-meta .v{font-family:var(--serif);font-size:30px;line-height:1;letter-spacing:-.01em}
+  .hero-meta .s{font-size:13px;color:var(--muted);margin-top:6px}
+
+  /* ---------- Hero portrait card ---------- */
+  .portrait{
+    position:relative;
+    align-self:start;
+  }
+  .portrait .frame{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:22px 22px 26px;
+    box-shadow: 0 1px 0 rgba(0,0,0,.03), 0 30px 60px -30px rgba(60,40,10,.25);
+    transform:rotate(1.2deg);
+  }
+  .portrait .pic{
+    aspect-ratio: 4/5;
+    background:#D9CFB8;
+    border:1px solid var(--line);
+    border-radius:2px;
+    position:relative;
+    overflow:hidden;
+  }
+  .portrait .pic img{
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position: 50% 18%;
+    display:block;
+    filter: saturate(0.92) contrast(1.02);
+  }
+  .portrait .caption{
+    display:flex;justify-content:space-between;align-items:baseline;
+    margin-top:18px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  }
+  .portrait .caption strong{
+    font-family:var(--serif);font-size:18px;letter-spacing:0;
+    font-weight:400;color:var(--ink);text-transform:none;
+  }
+  .portrait .stamp{
+    position:absolute;
+    top:-18px;right:-18px;
+    width:110px;height:110px;border-radius:50%;
+    border:1px dashed var(--accent-2);
+    color:var(--accent-2);
+    font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    display:flex;align-items:center;justify-content:center;text-align:center;
+    transform:rotate(-8deg);
+    background:rgba(251,247,238,.6);
+    line-height:1.2;
+    padding:10px;
+  }
+
+  /* ---------- Section skeleton ---------- */
+  section{padding:96px 40px;border-bottom:1px solid var(--line)}
+  .section-head{
+    display:grid;grid-template-columns: 1fr 2fr;gap:56px;
+    margin-bottom:56px;
+    align-items:end;
+  }
+  .section-head .num{
+    font-family:var(--mono);
+    font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);
+  }
+  .section-head h2{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size: clamp(40px, 5vw, 68px);
+    line-height:1;
+    letter-spacing:-.01em;
+    margin:14px 0 0;
+  }
+  .section-head .intro{
+    font-size:18px;color:var(--ink-soft);max-width:560px;text-wrap:pretty;
+  }
+
+  /* ---------- Manifesto ---------- */
+  .manifesto{
+    display:grid;grid-template-columns: 1fr 2fr;gap:56px;
+  }
+  .manifesto .lead{
+    font-family:var(--serif);
+    font-size: clamp(32px, 3.5vw, 48px);
+    line-height:1.1;
+    letter-spacing:-.01em;
+    color:var(--ink);
+  }
+  .manifesto .lead em{font-style:italic;color:var(--accent-2)}
+  .manifesto .body p{
+    font-size:18px;line-height:1.55;color:var(--ink-soft);
+    margin:0 0 18px;max-width:640px;text-wrap:pretty;
+  }
+  .manifesto .body p:first-child::first-letter{
+    font-family:var(--serif);
+    font-size:68px;line-height:.85;
+    float:left;
+    padding: 6px 12px 0 0;
+    color:var(--accent-2);
+  }
+
+  /* ---------- Topics grid ---------- */
+  .topics{
+    display:grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .topic{
+    grid-column: span 2;
+    background:var(--paper);
+    padding:28px 26px 26px;
+    display:flex;flex-direction:column;gap:14px;
+    min-height:260px;
+    transition:background .2s;
+  }
+  .topic:hover{background:#FFFCF4}
+  .topic .num{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .topic .num .tag{color:var(--accent-2)}
+  .topic h3{
+    font-family:var(--serif);font-weight:400;
+    font-size:26px;line-height:1.1;letter-spacing:-.01em;
+    margin:0;color:var(--ink);
+  }
+  .topic p{margin:0;color:var(--ink-soft);font-size:15px;line-height:1.55;text-wrap:pretty}
+  .topic.wide{grid-column: span 3}
+  .topic.feature{
+    grid-column: span 3;
+    background:var(--ink);color:var(--paper);
+  }
+  .topic.feature h3{color:var(--paper)}
+  .topic.feature p{color:rgba(251,247,238,.78)}
+  .topic.feature .num{color:rgba(251,247,238,.55)}
+  .topic.feature .num .tag{color:var(--accent)}
+
+  /* ---------- Voice / quotes ---------- */
+  .voices{
+    display:grid;
+    grid-template-columns: repeat(12,1fr);
+    gap:32px;
+  }
+  .voice{
+    grid-column: span 4;
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:32px 28px 24px;
+    position:relative;
+    display:flex;flex-direction:column;
+  }
+  .voice .mark{
+    font-family:var(--serif);font-size:90px;line-height:.6;
+    color:var(--accent);
+    height:28px;
+  }
+  .voice blockquote{
+    margin:10px 0 20px;
+    font-family:var(--serif);
+    font-size:24px;line-height:1.22;letter-spacing:-.005em;
+    color:var(--ink);
+    text-wrap:pretty;
+  }
+  .voice .src{
+    margin-top:auto;
+    border-top:1px dashed var(--line);
+    padding-top:14px;
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+  }
+  .voice.tall{grid-column:span 4;grid-row:span 2}
+  .voice.wide{grid-column:span 8}
+  .voice.wide blockquote{font-size:32px;line-height:1.18}
+
+  /* ---------- Work formats ---------- */
+  .formats{
+    display:grid;grid-template-columns: repeat(3,1fr);
+    gap:0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .format{
+    padding:36px 30px;
+    border-right:1px solid var(--line);
+    display:flex;flex-direction:column;gap:14px;
+    min-height:320px;
+  }
+  .format:last-child{border-right:none}
+  .format .tag{
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent-2);
+  }
+  .format h3{
+    font-family:var(--serif);font-weight:400;font-size:32px;line-height:1.05;margin:0;
+  }
+  .format p{margin:0;color:var(--ink-soft);font-size:15px;max-width:340px;text-wrap:pretty}
+  .format ul{
+    list-style:none;padding:0;margin:8px 0 0;
+    display:flex;flex-direction:column;gap:8px;
+    font-size:14px;color:var(--muted);
+  }
+  .format ul li{
+    padding-left:18px;position:relative;
+  }
+  .format ul li::before{
+    content:"";position:absolute;left:0;top:.7em;
+    width:8px;height:1px;background:var(--accent);
+  }
+  .format .foot{
+    margin-top:auto;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
+  }
+
+  /* ---------- About ---------- */
+  .about{
+    display:grid;grid-template-columns: 1fr 1.4fr;gap:72px;
+    align-items:start;
+  }
+  .about .card{
+    background:var(--paper);
+    border:1px solid var(--line);
+    padding:26px;
+    font-family:var(--mono);font-size:13px;
+  }
+  .about .card dl{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:14px 18px}
+  .about .card dt{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0}
+  .about .card dd{margin:0;color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.35}
+  .about .card hr{border:none;border-top:1px dashed var(--line);margin:22px 0}
+  .about .card .name{
+    font-family:var(--serif);font-size:34px;line-height:1;letter-spacing:-.01em;color:var(--ink);
+    margin-bottom:6px;
+  }
+  .about .card .role{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-2)}
+
+  .about .body h3{
+    font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.05;margin:0 0 20px;
+  }
+  .about .body p{font-size:17px;color:var(--ink-soft);margin:0 0 16px;max-width:620px;text-wrap:pretty}
+  .credentials{
+    margin-top:32px;
+    display:grid;grid-template-columns:repeat(2,1fr);
+    gap:18px 40px;
+    border-top:1px solid var(--line);
+    padding-top:28px;
+  }
+  .credentials .item .y{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--accent-2);text-transform:uppercase;margin-bottom:4px}
+  .credentials .item .t{font-size:15px;color:var(--ink)}
+
+  /* ---------- Latest posts teaser ---------- */
+  .latest{
+    display:grid;grid-template-columns: repeat(3,1fr);gap:0;
+    border:1px solid var(--line);
+  }
+  .post{
+    padding:28px 26px;
+    border-right:1px solid var(--line);
+    background:var(--paper);
+    display:flex;flex-direction:column;gap:12px;
+    min-height:280px;
+  }
+  .post:last-child{border-right:none}
+  .post .date{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+  .post h4{font-family:var(--serif);font-weight:400;font-size:22px;line-height:1.15;margin:0;letter-spacing:-.005em}
+  .post p{margin:0;font-size:14px;color:var(--ink-soft);line-height:1.55;text-wrap:pretty}
+  .post .read{
+    margin-top:auto;
+    font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent-2);text-decoration:none;
+    display:inline-flex;align-items:center;gap:8px;
+  }
+
+  /* ---------- Big CTA ---------- */
+  .cta-big{
+    background:var(--ink);
+    color:var(--paper);
+    padding:120px 40px;
+    border-bottom:1px solid var(--ink);
+    position:relative;
+    overflow:hidden;
+  }
+  .cta-big .kicker{
+    font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:24px;
+  }
+  .cta-big h2{
+    font-family:var(--serif);font-weight:400;
+    font-size: clamp(48px, 7vw, 108px);
+    line-height:.98;letter-spacing:-.02em;
+    margin:0 0 40px;max-width:12ch;
+  }
+  .cta-big h2 em{color:var(--accent);font-style:italic}
+  .cta-big .row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .cta-big .btn.primary{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .cta-big .btn.primary:hover{background:var(--accent);color:var(--ink);border-color:var(--accent)}
+  .cta-big .btn.ghost{border-color:rgba(251,247,238,.4);color:var(--paper)}
+  .cta-big .btn.ghost:hover{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+  .cta-big .note{
+    margin-top:48px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:rgba(251,247,238,.55);max-width:380px;line-height:1.6;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding:40px;
+    font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+    display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;
+  }
+
+  /* ---------- Tweaks panel ---------- */
+  .tweaks{
+    position:fixed;bottom:20px;right:20px;z-index:50;
+    background:var(--paper);
+    border:1px solid var(--ink);
+    border-radius:4px;
+    padding:16px 18px;
+    width:260px;
+    box-shadow:0 20px 40px -20px rgba(0,0,0,.3);
+    font-family:var(--sans);
+    display:none;
+  }
+  .tweaks.on{display:block}
+  .tweaks h5{margin:0 0 12px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between}
+  .tweaks .row{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+  .tweaks label{font-size:12px;color:var(--ink);font-family:var(--mono);letter-spacing:.06em;text-transform:uppercase}
+  .tweaks .pills{display:flex;gap:6px;flex-wrap:wrap}
+  .tweaks .pill{padding:6px 10px;border:1px solid var(--line);border-radius:999px;font-size:12px;cursor:pointer;background:transparent;font-family:var(--sans)}
+  .tweaks .pill.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .tweaks .swatches{display:flex;gap:6px}
+  .tweaks .sw{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent}
+  .tweaks .sw.active{border-color:var(--ink)}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px){
+    .hero, .manifesto, .about{grid-template-columns:1fr}
+    .topics, .latest{grid-template-columns:1fr 1fr}
+    .topic, .topic.wide, .topic.feature{grid-column:span 1}
+    .formats{grid-template-columns:1fr}
+    .format{border-right:none;border-bottom:1px solid var(--line)}
+    .voices{grid-template-columns:1fr}
+    .voice, .voice.wide, .voice.tall{grid-column:span 1;grid-row:auto}
+    .post{border-right:none;border-bottom:1px solid var(--line)}
+    .hero-meta{max-width:none}
+    .section-head{grid-template-columns:1fr}
+  }
+  @media (max-width: 620px){
+    section{padding:64px 20px}
+    .top{padding:16px 20px}
+    .top nav{display:none}
+    .hero{padding:48px 20px}
+    .topics, .latest{grid-template-columns:1fr}
+    .about .card dl{grid-template-columns:1fr}
+    .cta-big{padding:72px 20px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand"><span class="dot"></span>Е.&nbsp;Колесников · подростковый психолог</div>
+  <nav>
+    <a href="#manifesto">Подход</a>
+    <a href="#topics">Темы</a>
+    <a href="#about">О&nbsp;себе</a>
+    <a href="#formats">Работа</a>
+  </nav>
+  <a class="cta" href="#subscribe">Подписаться →</a>
+</header>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div>
+    <div class="eyebrow">
+      <span>Канал · Voronezh / Online</span>
+      <span class="sep"></span>
+      <span>с 2023</span>
+    </div>
+    <h1>Про подростков и&nbsp;<em>взрослых</em>, которые их&nbsp;растят.</h1>
+    <p class="lede">Заметки, разборы и практика семейной психологии. Без морализаторства и «воспитательных лекций» — только то, что реально помогает пройти кризис в отношениях и жить в мире и согласии.</p>
+
+    <div class="actions">
+      <a class="btn primary" href="#subscribe">Читать канал <span class="arrow">→</span></a>
+      <a class="btn ghost" href="#formats">Записаться на&nbsp;консультацию</a>
+    </div>
+
+    <div class="hero-meta">
+      <div>
+        <div class="k">Читателей</div>
+        <div class="v">559</div>
+        <div class="s">родителей, подростков и&nbsp;специалистов</div>
+      </div>
+      <div>
+        <div class="k">Публикаций</div>
+        <div class="v">700+</div>
+        <div class="s">разборы, заметки, исследования</div>
+      </div>
+      <div>
+        <div class="k">Формат</div>
+        <div class="v">Раз в&nbsp;2–3&nbsp;дня</div>
+        <div class="s">подкреплено практикой и&nbsp;данными</div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="portrait">
+    <div class="frame">
+      <div class="pic"><img id="hero-photo" src="assets/evgeny.jpg" alt="Евгений Колесников"></div>
+      <div class="caption"><strong>Евгений Колесников</strong><span>фото · 2026</span></div>
+    </div>
+    <div class="stamp">Авторский<br/>канал<br/>·&nbsp;not&nbsp;a&nbsp;blog&nbsp;·</div>
+  </aside>
+</section>
+
+<!-- MANIFESTO -->
+<section id="manifesto">
+  <div class="section-head">
+    <div>
+      <div class="num">01 — Подход</div>
+      <h2>Тихий&nbsp;разговор вместо громких&nbsp;советов.</h2>
+    </div>
+    <p class="intro">Я не даю универсальных рецептов «как надо воспитывать». Вместо этого — помогаю увидеть то, что обычно остаётся незамеченным: повторяющиеся паттерны, автоматические реакции, непроговорённые семейные правила.</p>
+  </div>
+
+  <div class="manifesto">
+    <p class="lead">Поведение&nbsp;— это <em>верхушка айсберга.</em> Интересно то, что под&nbsp;водой: мотивы, установки, страхи.</p>
+    <div class="body">
+      <p>Когда родитель приходит с запросом «мой подросток замкнулся, не слушает, целыми днями в телефоне» — мы смотрим не на симптом, а на среду, в которой этот симптом вырос. И почти всегда находим те самые невидимые правила, которые когда‑то были способом выжить, а теперь мешают жить.</p>
+      <p>Моя задача на консультации — работать переводчиком. Распознать, что нужно каждой стороне, и перевести это на язык, который другая сторона сможет услышать. Не унижая, не обесценивая и не разрушая то, что ещё есть между вами.</p>
+      <p>Сохранить отношения — и есть главное. Всё остальное — инструменты.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section id="topics" style="background:var(--bg-2)">
+  <div class="section-head">
+    <div>
+      <div class="num">02 — О&nbsp;чём канал</div>
+      <h2>Шесть&nbsp;разговоров, которые&nbsp;возвращаются.</h2>
+    </div>
+    <p class="intro">Темы, к которым я возвращаюсь раз за разом — в постах, на консультациях, на лекциях. Выберите то, что откликается, и начните читать оттуда.</p>
+  </div>
+
+  <div class="topics">
+    <article class="topic feature">
+      <div class="num"><span>№ 01 / featured</span><span class="tag">• читают чаще всего</span></div>
+      <h3>Четыре стиля воспитания: почему одни и те же реакции повторяются&nbsp;снова.</h3>
+      <p>Авторитарный, попустительский, отстранённый, авторитетный. Разбор на примерах из практики — и честный тест «а в каком стиле расту я сам».</p>
+    </article>
+
+    <article class="topic">
+      <div class="num"><span>№ 02</span><span class="tag">3&nbsp;поста</span></div>
+      <h3>Молчание подростка — тоже форма коммуникации.</h3>
+      <p>Почему «выйди из моей комнаты» — не про то, что вы не нужны.</p>
+    </article>
+
+    <article class="topic">
+      <div class="num"><span>№ 03</span><span class="tag">1&nbsp;пост</span></div>
+      <h3>Тревога родителя и&nbsp;катастрофизация будущего.</h3>
+      <p>Когда «ты не сдашь экзамены» работает против цели, которую вы ставите.</p>
+    </article>
+
+    <article class="topic wide">
+      <div class="num"><span>№ 04</span><span class="tag">серия · 6&nbsp;постов</span></div>
+      <h3>Явные и&nbsp;скрытые функции семьи.</h3>
+      <p>Шесть вещей, которые семья делает для подростка. И те правила, которые никто не объявлял вслух, но все в доме соблюдали.</p>
+    </article>
+
+    <article class="topic wide">
+      <div class="num"><span>№ 05</span><span class="tag">серия · 4&nbsp;поста</span></div>
+      <h3>Близость как&nbsp;навык. Четыре&nbsp;параметра контакта.</h3>
+      <p>Частота, продолжительность, разнообразие, сила влияния. Где именно проседает ваша связь с подростком — и что с этим можно сделать уже сегодня.</p>
+    </article>
+
+    <article class="topic">
+      <div class="num"><span>№ 06</span><span class="tag">2&nbsp;поста</span></div>
+      <h3>Мамы, вторая смена и&nbsp;чувство вины.</h3>
+      <p>Почему «я сорвалась» — это не про «я плохая мать», а про контекст.</p>
+    </article>
+
+    <article class="topic">
+      <div class="num"><span>№ 07</span><span class="tag">research</span></div>
+      <h3>Как подростку заводить друзей.</h3>
+      <p>Семь выводов из исследований — и пять практических шагов для родителя.</p>
+    </article>
+  </div>
+</section>
+
+<!-- VOICES / quotes -->
+<section id="voices">
+  <div class="section-head">
+    <div>
+      <div class="num">03 — Голос канала</div>
+      <h2>Несколько&nbsp;фраз, на которые&nbsp;часто ссылаются.</h2>
+    </div>
+    <p class="intro">Если хотите понять интонацию до того, как подписаться — прочитайте эти пять. Они довольно точно передают, как звучит канал.</p>
+  </div>
+
+  <div class="voices">
+    <figure class="voice wide">
+      <div class="mark">“</div>
+      <blockquote>Катастрофизация будущего не мотивирует. Она снижает мотивацию, давит на самооценку, увеличивает уровень давления — и не решает проблему.</blockquote>
+      <figcaption class="src"><span>о&nbsp;родительской тревоге</span><span>пост · 2026</span></figcaption>
+    </figure>
+
+    <figure class="voice tall">
+      <div class="mark">“</div>
+      <blockquote>Подросток не будет открываться там, где его ждёт оценка.</blockquote>
+      <figcaption class="src"><span>о&nbsp;близости</span><span>—</span></figcaption>
+    </figure>
+
+    <figure class="voice">
+      <div class="mark">“</div>
+      <blockquote>Напряжение в семье всегда находит выход. Чаще всего — через того, кто меньше всего защищён.</blockquote>
+      <figcaption class="src"><span>о&nbsp;системе</span><span>—</span></figcaption>
+    </figure>
+
+    <figure class="voice">
+      <div class="mark">“</div>
+      <blockquote>Баловать и&nbsp;строить близкие отношения — это разные процессы. Одно другому не мешает.</blockquote>
+      <figcaption class="src"><span>о&nbsp;границах</span><span>—</span></figcaption>
+    </figure>
+
+    <figure class="voice wide">
+      <div class="mark">“</div>
+      <blockquote>Отношения, основанные на уважении, — единственный рычаг влияния. Когда их нет, не за что держаться.</blockquote>
+      <figcaption class="src"><span>о&nbsp;работе с&nbsp;конфликтом</span><span>пост · 2026</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--bg-2)">
+  <div class="section-head">
+    <div>
+      <div class="num">04 — Автор</div>
+      <h2>Евгений&nbsp;Колесников.</h2>
+    </div>
+    <p class="intro">Школьный психолог, семейный консультант, преподаватель. Работаю в одной из воронежских школ — и одновременно веду частную практику онлайн и очно.</p>
+  </div>
+
+  <div class="about">
+    <div class="card">
+      <div class="role">Подростковый психолог</div>
+      <div class="name">Евгений<br/>Колесников</div>
+      <hr/>
+      <dl>
+        <dt>Практика</dt><dd>с 2017 года</dd>
+        <dt>С кем работаю</dt><dd>дети от 7&nbsp;лет, подростки, юноши 20+, родители, семейные пары</dd>
+        <dt>Форматы</dt><dd>индивидуально, семейно, онлайн/очно</dd>
+        <dt>Город</dt><dd>Воронеж · онлайн везде</dd>
+        <dt>Языки</dt><dd>русский</dd>
+        <dt>Метод</dt><dd>клиент‑центрированная терапия</dd>
+      </dl>
+      <hr/>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)">Личные сообщения&nbsp;→ @ekolesnikov91</div>
+    </div>
+
+    <div class="body">
+      <h3>Четыре года в школе дают то, чего нет в частном&nbsp;кабинете: ты видишь семьи в&nbsp;динамике.</h3>
+      <p>Наблюдая одну и ту же семью через нескольких детей, начинаешь видеть главное: проблема редко живёт в ребёнке. Она живёт между взрослыми, в среде, в непроговорённых правилах. И каждый ребёнок в семье — по‑своему — это напряжение выражает.</p>
+      <p>Поэтому на консультациях я почти всегда смотрю шире, чем отдельный симптом. Работаю с родителями и подростками вместе, помогаю услышать друг друга — и договариваться на языке уважения, а не контроля.</p>
+
+      <div class="credentials">
+        <div class="item"><div class="y">Образование</div><div class="t">Педагог‑психолог</div></div>
+        <div class="item"><div class="y">Сейчас</div><div class="t">Веду курс «Психология семейных отношений и&nbsp;консультирование» в&nbsp;педвузе</div></div>
+        <div class="item"><div class="y">Школа</div><div class="t">Четвёртый год работаю школьным психологом в&nbsp;Воронеже</div></div>
+        <div class="item"><div class="y">Частная практика</div><div class="t">Подростки, родители, семейные пары в кризисе</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATS -->
+<section id="formats">
+  <div class="section-head">
+    <div>
+      <div class="num">05 — Как&nbsp;работаем</div>
+      <h2>Три&nbsp;формата, в&nbsp;которых&nbsp;я&nbsp;могу быть полезен.</h2>
+    </div>
+    <p class="intro">Выбор формата — часть диагностики. На первой встрече разберёмся, что подойдёт именно вашей ситуации. Иногда это одна встреча с родителем, иногда — семейная серия.</p>
+  </div>
+
+  <div class="formats">
+    <article class="format">
+      <div class="tag">· 01 ·  Родительская</div>
+      <h3>Консультация родителя</h3>
+      <p>Когда подросток «не идёт к&nbsp;психологу», но вам самим нужен внятный взгляд со&nbsp;стороны.</p>
+      <ul>
+        <li>разбор конкретной ситуации</li>
+        <li>ваш стиль воспитания — как он работает</li>
+        <li>что можно изменить, не «ломая» ребёнка</li>
+      </ul>
+      <div class="foot">60 минут · онлайн / Воронеж</div>
+    </article>
+
+    <article class="format">
+      <div class="tag">· 02 ·  Подростковая</div>
+      <h3>Работа с&nbsp;подростком</h3>
+      <p>Безопасное пространство, где не&nbsp;оценивают и&nbsp;не&nbsp;пересказывают родителям. Про тревогу, мотивацию, отношения, самооценку.</p>
+      <ul>
+        <li>первый контакт бесплатный, знакомство</li>
+        <li>конфиденциальность оговаривается с&nbsp;обеих сторон</li>
+        <li>родители получают обратную связь по&nbsp;согласию</li>
+      </ul>
+      <div class="foot">50 минут · онлайн / Воронеж</div>
+    </article>
+
+    <article class="format">
+      <div class="tag">· 03 ·  Семейная</div>
+      <h3>Совместная встреча</h3>
+      <p>Родитель и&nbsp;подросток вместе. Для восстановления детско‑родительских отношений это даёт больше, чем&nbsp;две индивидуальные.</p>
+      <ul>
+        <li>я работаю переводчиком между&nbsp;сторонами</li>
+        <li>правила, эмоции, договорённости — вслух</li>
+        <li>обычно курс из 4–6 встреч</li>
+      </ul>
+      <div class="foot">80 минут · онлайн / Воронеж</div>
+    </article>
+  </div>
+</section>
+
+<!-- LATEST -->
+<section id="latest" style="background:var(--bg-2)">
+  <div class="section-head">
+    <div>
+      <div class="num">06 — Свежие заметки</div>
+      <h2>Из&nbsp;канала,&nbsp;за&nbsp;последние недели.</h2>
+    </div>
+    <p class="intro">Три недавние публикации. Полный архив — в Telegram; новое добавляется раз в 2–3 дня.</p>
+  </div>
+
+  <div class="latest">
+    <article class="post">
+      <div class="date"><span>Апр · 18</span><span>· заметка</span></div>
+      <h4>В&nbsp;каждой семье есть правила, которые никто не&nbsp;объявлял.</h4>
+      <p>«Злиться нельзя». «Попросить — слабость». Никто не вывешивал их на стену, но все в доме знали. Как эти правила формируются — и что с ними потом происходит.</p>
+      <a class="read" href="#">Читать пост&nbsp;→</a>
+    </article>
+    <article class="post">
+      <div class="date"><span>Апр · 15</span><span>· практика</span></div>
+      <h4>Четыре параметра близости с&nbsp;подростком.</h4>
+      <p>Частота, продолжительность, разнообразие, сила влияния. Короткая самодиагностика — и что делать, если проседает разнообразие контактов.</p>
+      <a class="read" href="#">Читать пост&nbsp;→</a>
+    </article>
+    <article class="post">
+      <div class="date"><span>Апр · 12</span><span>· исследование</span></div>
+      <h4>62% бездетных пар довольны&nbsp;браком. После&nbsp;ребёнка — 38%.</h4>
+      <p>Личная заметка о периоде, когда «мы вдвоём» нужно выкраивать по крупицам — и почему это нормально и нестыдно называть своими именами.</p>
+      <a class="read" href="#">Читать пост&nbsp;→</a>
+    </article>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-big" id="subscribe">
+  <div class="kicker">· Telegram · @kolesnikov_psychology ·</div>
+  <h2>Подпишитесь. Если откликнется&nbsp;— <em>напишите.</em></h2>
+  <div class="row">
+    <a class="btn primary" href="https://t.me/kolesnikov_psychology" target="_blank" rel="noopener">Открыть канал в&nbsp;Telegram <span class="arrow">→</span></a>
+    <a class="btn ghost" href="https://t.me/ekolesnikov91" target="_blank" rel="noopener">Написать в&nbsp;личные · @ekolesnikov91</a>
+  </div>
+  <p class="note">Канал дублируется в&nbsp;MAX. Консультации — онлайн и&nbsp;очно в&nbsp;Воронеже. Первый контакт ни&nbsp;к&nbsp;чему не&nbsp;обязывает — разберёмся вместе, подходит ли вам формат.</p>
+</section>
+
+</main>
+
+<footer>
+  <span>© Евгений Колесников · 2026</span>
+  <span>подростковая психология · семейное консультирование</span>
+  <span>Воронеж&nbsp;→ везде онлайн</span>
+</footer>
+
+<!-- TWEAKS -->
+<div class="tweaks" id="tweaks">
+  <h5>Tweaks <span style="color:var(--accent-2);cursor:pointer" onclick="document.getElementById('tweaks').classList.remove('on')">✕</span></h5>
+  <div class="row">
+    <label>Палитра</label>
+    <div class="swatches" id="sw-palette">
+      <div class="sw active" data-p="warm" style="background:#F4EFE6;border-color:var(--ink)" title="warm paper"></div>
+      <div class="sw" data-p="cool" style="background:#E8EAE6" title="cool linen"></div>
+      <div class="sw" data-p="ink" style="background:#1C1B18" title="dark ink"></div>
+    </div>
+  </div>
+  <div class="row">
+    <label>Заголовок</label>
+    <div class="pills" id="sw-head">
+      <button class="pill active" data-h='Про подростков и&nbsp;<em>взрослых</em>, которые их&nbsp;растят.'>Про подростков</button>
+      <button class="pill" data-h='Как&nbsp;родителям и&nbsp;подросткам пройти <em>кризис</em> в&nbsp;отношениях.'>Про кризис</button>
+      <button class="pill" data-h='Молчание&nbsp;подростка — тоже форма <em>коммуникации.</em>'>Про молчание</button>
+    </div>
+  </div>
+  <div class="row">
+    <label>Плотность</label>
+    <div class="pills" id="sw-dense">
+      <button class="pill active" data-d="normal">Обычная</button>
+      <button class="pill" data-d="airy">Воздушная</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// Ensure preview token is forwarded to image src (preview server requires ?t=…)
+(function(){
+  try{
+    const t = new URL(location.href).searchParams.get('t');
+    if(t){
+      const img = document.getElementById('hero-photo');
+      if(img) img.src = 'assets/evgeny.jpg?t=' + t;
+    }
+  }catch(_){}
+})();
+</script>
+<script>
+/*EDITMODE-BEGIN*/const TWEAK_DEFAULTS = {
+  "palette": "warm",
+  "headline": "hero-a",
+  "density": "normal"
+}/*EDITMODE-END*/;
+
+(function(){
+  const st = Object.assign({}, TWEAK_DEFAULTS);
+
+  // --- edit-mode availability protocol ---
+  window.addEventListener('message', (e)=>{
+    const d = e.data || {};
+    if(d.type==='__activate_edit_mode') document.getElementById('tweaks').classList.add('on');
+    if(d.type==='__deactivate_edit_mode') document.getElementById('tweaks').classList.remove('on');
+  });
+  try{ window.parent.postMessage({type:'__edit_mode_available'}, '*'); }catch(_){}
+
+  function persist(edits){
+    try{ window.parent.postMessage({type:'__edit_mode_set_keys', edits}, '*'); }catch(_){}
+  }
+
+  // palette
+  const palettes = {
+    warm:{'--bg':'#F4EFE6','--bg-2':'#EBE4D6','--ink':'#1C1B18','--paper':'#FBF7EE','--line':'#CFC6B4','--accent':'oklch(0.62 0.13 58)','--accent-2':'oklch(0.45 0.09 25)'},
+    cool:{'--bg':'#E8EAE6','--bg-2':'#DCDFD8','--ink':'#17191B','--paper':'#F2F3EF','--line':'#C3C7BE','--accent':'oklch(0.58 0.08 200)','--accent-2':'oklch(0.40 0.06 220)'},
+    ink:{'--bg':'#18171A','--bg-2':'#1F1E22','--ink':'#F2EDE0','--paper':'#232125','--line':'#3A3740','--accent':'oklch(0.78 0.13 80)','--accent-2':'oklch(0.78 0.13 80)'}
+  };
+  function applyPalette(p){
+    const vars = palettes[p] || palettes.warm;
+    const root = document.documentElement;
+    for(const k in vars) root.style.setProperty(k, vars[k]);
+    if(p==='ink'){
+      root.style.setProperty('--ink-soft','#D8D2C2');
+      root.style.setProperty('--muted','#8A8678');
+    }else{
+      root.style.setProperty('--ink-soft','#2E2C27');
+      root.style.setProperty('--muted','#6B6459');
+    }
+    document.querySelectorAll('#sw-palette .sw').forEach(el=>el.classList.toggle('active', el.dataset.p===p));
+  }
+
+  // headline
+  const heroH1 = document.querySelector('.hero h1');
+  function applyHeadline(key){
+    const btn = document.querySelector(`#sw-head .pill[data-h]:nth-child(${ {"hero-a":1,"hero-b":2,"hero-c":3}[key] })`);
+    document.querySelectorAll('#sw-head .pill').forEach(b=>b.classList.remove('active'));
+    if(btn){ btn.classList.add('active'); heroH1.innerHTML = btn.dataset.h; }
+  }
+
+  // density
+  function applyDensity(d){
+    document.querySelectorAll('section').forEach(s=>{ s.style.padding = d==='airy' ? '140px 40px' : ''; });
+    document.querySelectorAll('#sw-dense .pill').forEach(el=>el.classList.toggle('active', el.dataset.d===d));
+  }
+
+  // wire
+  document.querySelectorAll('#sw-palette .sw').forEach(el=>el.addEventListener('click', ()=>{
+    st.palette = el.dataset.p; applyPalette(st.palette); persist({palette:st.palette});
+  }));
+  document.querySelectorAll('#sw-head .pill').forEach((el,i)=>el.addEventListener('click', ()=>{
+    const key = ['hero-a','hero-b','hero-c'][i]; st.headline = key; applyHeadline(key); persist({headline:key});
+  }));
+  document.querySelectorAll('#sw-dense .pill').forEach(el=>el.addEventListener('click', ()=>{
+    st.density = el.dataset.d; applyDensity(st.density); persist({density:st.density});
+  }));
+
+  applyPalette(st.palette);
+  applyHeadline(st.headline);
+  applyDensity(st.density);
+})();
+</script>
+</body>
+</html>
